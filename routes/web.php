@@ -13,26 +13,26 @@ use \App\Http\Controllers\HomePageController;
 |
 */
 
-Route::get('/home/{id}', [HomePageController::class, 'index']);
-
-Route::get('/hello', function () {
-    return 'Hello world!';
-});
-
-Route::get('/users/{id?}', function ($id = 'No Id provided') {
-    return 'user id is : ' . $id;
-});
-
-Route::get('/view', function () {
-    return view('child');
-});
-
-Route::get('/', function () {
-    return view('welcome', [
-        'name' => 'Mustafa'
-    ]);
-});
+//Route::get('/home/{id}', [HomePageController::class, 'index']);
+//
+//Route::get('/hello', function () {
+//    return 'Hello world!';
+//});
+//
+//Route::get('/users/{id?}', function ($id = 'No Id provided') {
+//    return 'user id is : ' . $id;
+//});
+//
+//Route::get('/view', function () {
+//    return view('child');
+//});
+//
+//Route::get('/', function () {
+//    return view('welcome', [
+//        'name' => 'Mustafa'
+//    ]);
+//});
 
 Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
-
 Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.create');
+Route::post('/posts/{post_id}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.create');
