@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -18,13 +19,11 @@ class PostController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        Post::create([
-            'description' => $request->description,
-            'user_id' => 1
-        ]);
-
+        $validatedData = $request->validated();
+        $validatedData['user_id'] = auth()->user()->id;
+        Post::create($validatedData);
         return redirect()->back();
     }
 }

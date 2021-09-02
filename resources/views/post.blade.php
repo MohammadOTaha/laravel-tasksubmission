@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.app')
 
 @section('title') POST @endsection
 
@@ -14,8 +14,10 @@
         <form action="{{route('posts.create')}}" method="post" style="width: 66%">
             @csrf
             <div class="form-group">
-                <label>What's on your mind, Mustafa?</label>
+                @include('layouts.errors')
+                <label>What's on your mind, {{auth()->user()->name}}?</label>
                 <textarea class="form-control" name="description" required rows="3"></textarea>
+
             </div>
             <button class="form-control" type="submit">Post!</button>
         </form>
@@ -25,8 +27,11 @@
                 @foreach($posts as $post)
                     <div class="post-content">
                         <div class="post-container">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="user"
-                                 class="profile-photo-md pull-left">
+                            @if($post->user->image)
+                            <img src="{{\Illuminate\Support\Facades\Storage::disk('local')->url($post->user->image)}}" alt="user" class="profile-photo-md pull-left">
+                            @else
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="user" class="profile-photo-md pull-left">
+                            @endif
                             <div class="post-detail">
                                 <div class="user-info">
                                     <h5><a href="timeline.html" class="profile-link">{{$post->user->name}}</a> <span

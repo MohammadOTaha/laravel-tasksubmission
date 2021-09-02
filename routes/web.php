@@ -27,12 +27,21 @@ use \App\Http\Controllers\HomePageController;
 //    return view('child');
 //});
 //
-//Route::get('/', function () {
-//    return view('welcome', [
-//        'name' => 'Mustafa'
-//    ]);
-//});
+Route::get('/', function () {
+    return view('welcome', [
+        'name' => 'Mustafa'
+    ]);
+});
 
-Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
-Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.create');
-Route::post('/posts/{post_id}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.create');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
+    Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.create');
+    Route::post('/posts/{post_id}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.create');
+});
+
+Route::get('test', function () {
+   return view('auth.edit');
+});
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
