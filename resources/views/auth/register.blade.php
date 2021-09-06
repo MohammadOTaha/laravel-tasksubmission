@@ -26,6 +26,21 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="profile_desc" class="col-md-4 col-form-label text-md-right">{{ __('Profile Description') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="profile_desc" type="text" class="form-control @error('profile_desc') is-invalid @enderror" name="profile_desc" value="{{ old('profile_desc') }}" required autocomplete="profile_desc" autofocus>
+
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
                             <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Profile Picture') }}</label>
 
                             <div class="col-md-6">

@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReactionController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\HomePageController;
 /*
@@ -34,14 +39,15 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
-    Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.create');
-    Route::post('/posts/{post_id}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.create');
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.create');
+    Route::post('/posts/{post_id}/comments', [CommentController::class, 'store'])->name('comments.create');
+    Route::post('/like/{post_id}', [ReactionController::class, 'storeLike'])->name('posts.like');
+    Route::post('/dislike/{post_id}', [ReactionController::class, 'storeDislike'])->name('posts.dislike');
 });
 
-Route::get('test', function () {
-   return view('auth.edit');
-});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile/{user_id}', [ProfileController::class, 'index']);

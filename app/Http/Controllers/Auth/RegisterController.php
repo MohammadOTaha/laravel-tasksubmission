@@ -52,6 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'profile_desc' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -69,6 +70,7 @@ class RegisterController extends Controller
         $path = Storage::putFile('users', $data['image']);
         return User::create([
             'name' => $data['name'],
+            'profile_desc' => $data['profile_desc'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'image' => $path
